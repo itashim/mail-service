@@ -1,0 +1,14 @@
+spring:
+  profiles:
+    active: dev
+  servlet:
+    multipart:                   ## MULTIPART (MultipartProperties)
+      enabled: true              # Enable multipart uploads
+      file-size-threshold: 2KB   # Max file size.
+      max-file-size: 200MB       # Max Request Size
+      max-request-size: 215MB    # Max Request Size
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+
+

@@ -1,0 +1,58 @@
+spring:
+  zipkin:
+    base-url: http://localhost:9411/
+  sleuth:
+    sampler:
+      probability: 1.0 # mean 100% of all times
+  datasource:
+    url: jdbc:postgresql://*:5432/ext
+    type: com.zaxxer.hikari.HikariDataSource
+    username: ext_usr
+    password: PassWord
+    driver-class-name: org.postgresql.Driver
+    # Hikari will use the above plus the following to setup connection pooling
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+      idle-timeout: 30000
+      pool-name: SpringBootJPAHikariCP_MAILSERVICE
+      max-lifetime: 2000000
+      connection-timeout: 30000
+    jpa:
+      show-sql: on
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.PostgreSQL82Dialect
+        org:
+          hibernate:
+            envers:
+              audit_table_suffix: _history
+
+  eureka:
+    client:
+      eureka-server-port: 8761
+      registryFetchIntervalSeconds: 5
+      enabled: true
+      serviceUrl:
+        defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+    instance:
+      preferIpAddress: true
+  config:
+    activate:
+      on-profile: dev
+
+logging:
+  level:
+    ROOT: info
+    #com.netflix.discovery.DiscoveryClient: warn
+    #org.springframework.core.log.LogFormatUtils: info
+    #org.springframework.web.servlet.FrameworkServlet: info
+    #org.springframework.cloud.sleuth.zipkin2.sender: info
+    javax.mail: info
+    com.netflix.discovery.shared.resolver.aws.ConfigClusterResolver: error
+
+server:
+  port: 8088
+
+file: ## File Storage Properties
+  upload-dir: D:\uploads
